@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 
-import edu.utvt.examen.persistence.entities.Item;
 import edu.utvt.examen.persistence.entities.Persona;
 
 public interface PersonaService {
