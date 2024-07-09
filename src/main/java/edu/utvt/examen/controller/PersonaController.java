@@ -22,38 +22,39 @@ import edu.utvt.examen.persistence.services.PersonaService;
 @RestController
 @RequestMapping("/api/v1/personas")
 public class PersonaController {
-	
+
 	@Autowired
 	private PersonaService personaService;
-	
+
 	@GetMapping("/all")
 	public List<Persona> get() {
 		return this.personaService.findAll();
 	}
-	
+
 	@GetMapping
-	public Page<Persona> findAll(@RequestParam(defaultValue = "1", value = "page") Integer page, Integer size) {
+	public Page<Persona> findAll(@RequestParam(defaultValue = "0", value = "page") Integer page,
+			@RequestParam(defaultValue = "50", value = "size") Integer size) {
 		return this.personaService.findAll(page, size);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Persona> save(@RequestBody Persona persona) {
 		return ResponseEntity.created(null).body(this.personaService.save(persona));
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Persona> update(@PathVariable("id") UUID id, @RequestBody Persona persona) {
-		return ResponseEntity.ok(this.personaService.update(id, persona));		
+		return ResponseEntity.ok(this.personaService.update(id, persona));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Persona> findById(@PathVariable("id") UUID id) {
 		return ResponseEntity.of(this.personaService.findById(id));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable("id") UUID id) {
-		
+
 		this.personaService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}

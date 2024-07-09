@@ -21,39 +21,39 @@ import edu.utvt.examen.persistence.services.ItemService;
 @RestController
 @RequestMapping("/api/v1/items")
 public class ItemController {
-	
+
 	@Autowired
 	private ItemService ItemService;
-	
-	
+
 	@GetMapping("/all")
 	public List<Item> get() {
 		return this.ItemService.findAll();
 	}
-	
+
 	@GetMapping
-	public Page<Item> findAll(@RequestParam(defaultValue = "1", value = "page") Integer page, Integer size) {
+	public Page<Item> findAll(@RequestParam(defaultValue = "0", value = "page") Integer page,
+			@RequestParam(defaultValue = "50", value = "size") Integer size) {
 		return this.ItemService.findAll(page, size);
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Item> save(@RequestBody Item item) {
 		return ResponseEntity.created(null).body(this.ItemService.save(item));
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Item> update(@PathVariable("id") Long id, @RequestBody Item item) {
-		return ResponseEntity.ok(this.ItemService.update(id, item));		
+		return ResponseEntity.ok(this.ItemService.update(id, item));
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Item> findById(@PathVariable("id") Long id) {
 		return ResponseEntity.of(this.ItemService.findById(id));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
-		
+
 		this.ItemService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
